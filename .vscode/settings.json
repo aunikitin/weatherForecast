@@ -1,0 +1,12 @@
+{
+    "search.exclude": {
+        "**/.vscode": true,
+        "**/bin": true,
+        "**/obj": true
+    },
+    "files.exclude": {
+        "**/.vscode": true,
+        "**/bin": true,
+        "**/obj": true
+    }
+}

@@ -1,0 +1,31 @@
+<h1>Weather forecast</h1>
+
+<p>This component demonstrates fetching data from the server.</p>
+
+<p *ngIf="!cities"><em>Loading...</em></p>
+
+<select (ngModelChange)="selectCity($event)" name="city" [ngModel]="selectedCity">
+  <option [ngValue]="null" disabled>Choose a city</option>
+  <option *ngFor="let city of cities" [ngValue]="city">
+    {{ city.cityName }}
+  </option>
+</select>
+
+<table class="table" *ngIf="cities">
+  <thead>
+    <tr>
+      <th>Date</th>
+      <th>Temp. (C)</th>
+      <th>Temp. (F)</th>
+      <th>Summary</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let city of cities">
+      <td>{{ forecast.dateFormatted }}</td>
+      <td>{{ forecast.temperatureC }}</td>
+      <td>{{ forecast.temperatureF }}</td>
+      <td>{{ forecast.summary }}</td>
+    </tr>
+  </tbody>
+</table>
