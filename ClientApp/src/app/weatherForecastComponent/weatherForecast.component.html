@@ -1,0 +1,55 @@
+<h1>Weather forecast</h1>
+<hr>
+<p *ngIf="!cities"><em>Loading...</em></p>
+
+<div style="display: inline">
+  <select *ngIf="cities" (ngModelChange)="selectCity($event)" name="city" [ngModel]="selectedCity">
+    <option [ngValue]="null" disabled>Choose a city</option>
+    <option *ngFor="let city of cities" [ngValue]="city">
+      {{ city.cityName }}
+    </option>
+  </select>
+  <button *ngIf="weatherForecasts.length > 0 && !chartShown" (click)="showChart()">
+    Показать график
+  </button>
+  <button *ngIf="weatherForecasts.length > 0 && chartShown" (click)="showTable()">
+    Показать таблицу
+  </button>
+</div>
+
+<div>
+  <ng-template [ngTemplateOutlet]="currentTemplate"></ng-template>
+</div>
+
+<ng-template #chartTemplate>
+  <canvas id="chart"></canvas>
+</ng-template>
+
+<ng-template #tableTemplate>
+  <table class="table" style="text-align: center">
+    <colgroup>
+      <col style="width: 32%;">
+      <col style="width: 32%;">
+      <col style="width: 32%;">
+    </colgroup>
+    <thead>
+      <tr>
+        <th style="text-align: center">Min temp</th>
+        <th style="text-align: center">Max temp</th>
+        <th style="text-align: center">Datetime</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngIf="hasLoadingData">
+        <td></td>
+        <td><em>Loading...</em></td>
+        <td></td>
+      </tr>
+      <tr *ngFor="let forecast of weatherForecasts">
+        <td>{{ forecast.minTemp }}</td>
+        <td>{{ forecast.maxTemp }}</td>
+        <td>{{ forecast.datetime | date: 'fullDate' }}</td>
+      </tr>
+    </tbody>
+  </table>
+</ng-template>

@@ -16,7 +16,7 @@ namespace WeatherForecast.Repository
             {
                 ID = 524901,
                 CityName = "Moscow"
-            }
+            },
         };
 
         public static IEnumerable<City> GetAllCities()

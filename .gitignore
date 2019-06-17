@@ -234,3 +234,4 @@ _Pvt_Extensions
 
 #.vscode
 *.code-workspace
+.vscode

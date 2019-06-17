@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using WeatherForecast.Models;
 
 namespace WeatherForecast.Controllers
 {
@@ -11,9 +12,12 @@ namespace WeatherForecast.Controllers
         private const string _appKey = "045fc7ad99114a299d22a52b28bcf035";
 
         [HttpGet("[action]")]
-        public string GetAppKey()
+        public AppKey GetAppKey()
         {
-            return _appKey;
+            return new AppKey
+            {
+                Key = _appKey
+            };
         }
     }
 }
