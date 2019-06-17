@@ -7,14 +7,14 @@ import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
-import { FetchDataComponent } from './weatherForecastComponent/weatherForecast.component';
+import { WeatherForecastComponent } from './weatherForecast/weatherForecast.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavMenuComponent,
     HomeComponent,
-    FetchDataComponent
+    WeatherForecastComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -22,7 +22,7 @@ import { FetchDataComponent } from './weatherForecastComponent/weatherForecast.c
     FormsModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
-      { path: 'weather_forecast', component: FetchDataComponent },
+      { path: 'weather_forecast', component: WeatherForecastComponent },
     ])
   ],
   providers: [],

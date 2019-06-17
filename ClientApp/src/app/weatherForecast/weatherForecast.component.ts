@@ -9,7 +9,7 @@ import { Chart } from 'chart.js';
   templateUrl: './weatherForecast.component.html',
   providers: [CitiesService, ForecastService],
 })
-export class FetchDataComponent implements OnInit {
+export class WeatherForecastComponent implements OnInit {
   @ViewChild('chartTemplate') chartTemplate: TemplateRef<any>;
   @ViewChild('tableTemplate') tableTemplate: TemplateRef<any>;
 
