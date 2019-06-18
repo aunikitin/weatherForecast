@@ -3,10 +3,9 @@ import { CitiesService } from '../../services/citiesService';
 import City from '../../models/city';
 import { ForecastService } from '../../services/forecastService';
 import WeatherForecast from '../../models/weatherForecast';
-import { Chart } from 'chart.js';
 
 @Component({
-  templateUrl: './weatherForecast.component.html',
+  templateUrl: './weather-forecast.component.html',
   providers: [CitiesService, ForecastService],
 })
 export class WeatherForecastComponent implements OnInit {
@@ -18,34 +17,25 @@ export class WeatherForecastComponent implements OnInit {
   public weatherForecasts = new Array<WeatherForecast>();
   public currentTemplate: TemplateRef<any>;
 
-  public counter = 0;
-
-  public hasLoadingData = false;
-  private _chartShown: boolean = false;
-  get chartShown(): boolean {
-    return this._chartShown;
-  }
-  set chartShown(theBar: boolean) {
-    this._chartShown = theBar;
-  }
+  public loadingActions: string[] = [];
+  private chartShown: boolean = false;
 
   constructor(private citiesService: CitiesService, private forecastService: ForecastService) {}
 
   ngOnInit() {
-    this.hasLoadingData = true;
+    this.loadingActions.push('LoadCities');
     this.currentTemplate = this.tableTemplate;
     this.citiesService.getAllCities().subscribe(cities => {
       this.cities = cities;
-      this.hasLoadingData = false;
+      const index = this.loadingActions.findIndex(a => a === 'LoadCities');
+      this.loadingActions.splice(index, 1);
     });
   }
 
   public selectCity(selectedCity: City) {
-    this.hasLoadingData = true;
+    this.loadingActions.push('LoadForecasts');
     this.selectedCity = selectedCity;
-    this.weatherForecasts.length = 0;
     this.forecastService.getForecasts(this.selectedCity.id).subscribe(data => {
-      this.hasLoadingData = false;
       this.weatherForecasts = [
         ...data.data.map(d => {
           return {
@@ -55,6 +45,8 @@ export class WeatherForecastComponent implements OnInit {
           };
         }),
       ];
+      const index = this.loadingActions.findIndex(a => a === 'LoadForecasts');
+      this.loadingActions.splice(index, 1);
       this.loadTemplate();
     });
   }
@@ -64,7 +56,6 @@ export class WeatherForecastComponent implements OnInit {
       this.chartShown = true;
       this.currentTemplate = this.chartTemplate;
     }
-    this.loadChartAfterTempRender();
   }
 
   public showTable() {
@@ -78,32 +69,5 @@ export class WeatherForecastComponent implements OnInit {
       return;
     }
     this.showTable();
-  }
-
-  private loadChartAfterTempRender() {
-    // should load after template render :(
-    setTimeout(this.initChart.bind(this), 500);
-  }
-
-  private initChart() {
-    const canvas = (document.getElementById('chart') as HTMLCanvasElement).getContext('2d');
-    const chart = new Chart(canvas, {
-      type: 'line',
-      data: {
-        labels: [...this.weatherForecasts.map(f => f.datetime)],
-        datasets: [
-          {
-            label: 'Max temp',
-            borderColor: 'red',
-            data: [...this.weatherForecasts.map(f => f.maxTemp)],
-          },
-          {
-            label: 'Min temp',
-            borderColor: 'blue',
-            data: [...this.weatherForecasts.map(f => f.minTemp)],
-          },
-        ],
-      },
-    });
   }
 }

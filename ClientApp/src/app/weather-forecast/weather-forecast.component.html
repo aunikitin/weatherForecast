@@ -22,34 +22,9 @@
 </div>
 
 <ng-template #chartTemplate>
-  <canvas id="chart"></canvas>
+  <app-chart [weatherForecasts]="weatherForecasts"></app-chart>
 </ng-template>
 
 <ng-template #tableTemplate>
-  <table class="table" style="text-align: center">
-    <colgroup>
-      <col style="width: 32%;">
-      <col style="width: 32%;">
-      <col style="width: 32%;">
-    </colgroup>
-    <thead>
-      <tr>
-        <th style="text-align: center">Min temp</th>
-        <th style="text-align: center">Max temp</th>
-        <th style="text-align: center">Datetime</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngIf="hasLoadingData">
-        <td></td>
-        <td><em>Loading...</em></td>
-        <td></td>
-      </tr>
-      <tr *ngFor="let forecast of weatherForecasts">
-        <td>{{ forecast.minTemp }}</td>
-        <td>{{ forecast.maxTemp }}</td>
-        <td>{{ forecast.datetime | date: 'fullDate' }}</td>
-      </tr>
-    </tbody>
-  </table>
+  <app-table [weatherForecasts]="weatherForecasts" [loadingActions]="loadingActions"></app-table>
 </ng-template>

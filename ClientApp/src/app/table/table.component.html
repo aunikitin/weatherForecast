@@ -1,0 +1,28 @@
+<table class="table" style="text-align: center">
+  <colgroup>
+    <col style="width: 32%;">
+    <col style="width: 32%;">
+    <col style="width: 32%;">
+  </colgroup>
+  <thead>
+    <tr>
+      <th style="text-align: center">Min temp</th>
+      <th style="text-align: center">Max temp</th>
+      <th style="text-align: center">Datetime</th>
+    </tr>
+  </thead>
+  <tbody *ngIf="loadingActions.length > 0">
+    <tr>
+      <td></td>
+      <td><em>Loading...</em></td>
+      <td></td>
+    </tr>
+  </tbody>
+  <tbody *ngIf="loadingActions.length === 0">
+    <tr *ngFor="let forecast of weatherForecasts">
+      <td>{{ forecast.minTemp }}</td>
+      <td>{{ forecast.maxTemp }}</td>
+      <td>{{ forecast.datetime | date: 'fullDate' }}</td>
+    </tr>
+  </tbody>
+</table>
